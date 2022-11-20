@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import org.junit.Test;
 
 public class JewishHolidaysCalendarTest {
@@ -73,6 +74,17 @@ public class JewishHolidaysCalendarTest {
         System.out.println(hebcal.formatHebrewDate_Hebrew());
         if(hebcal.isYomTov()) {
             System.out.println("YOMTOV");
+        }
+
+        List<String> HOLIDAY_LIST = List.of("1:7", "2:7", "15:7", "22:7", "15:1", "21:1", "6:3" );
+        System.out.println("ימים טובים");
+        hebcal = new JewishHolidaysCalendar(9, 1, 2022, true, HebrewDate.HEBREW_LOCALE);
+        for(int i=0; i<370; i++) {
+            String dayMonth = String.format("%d:%d", hebcal.getHebrewDate(), hebcal.getHebrewMonth());
+            if(HOLIDAY_LIST.contains(dayMonth)){
+                System.out.println(hebcal.formatHebrewDate_Hebrew());
+            }
+            hebcal.forward();
         }
 
     }
