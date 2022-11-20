@@ -24,43 +24,39 @@
    danny@sadinoff.com
  */
 
-
 package net.sf.hebcal;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.PrintStream;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Calendar;
 
 /**
  * Hello world!
- *  @revision $Header$
  *
  */
-public class App 
+public class App
 {
     public static void main( String[] args ) throws Exception
     {
-        PrintWriter out = new PrintWriter (new BufferedWriter(new OutputStreamWriter(
-                                                                                     new FileOutputStream(args[0]),
-                                                                                     "UTF-8")));
-        out.println("<html><head><META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><pre dir=\"rtl\">");
-        out.println("\u05e0\u05d9\u05e1\u05df<br>");
-        out.println("אבגדהוזחטי");
-        out.println("אבגדהוזחטי");
+//        PrintWriter out = new PrintWriter (new BufferedWriter(new OutputStreamWriter(
+//            new FileOutputStream(args[0]),
+//            StandardCharsets.UTF_8)));
+//        out.println("<html><head><META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><pre dir=\"rtl\">");
+//        out.println("\u05e0\u05d9\u05e1\u05df<br>");
+//        out.println("אבגדהוזחטי");
+//        out.println("אבגדהוזחטי");
+        PrintStream out = System.out;
 
         Date startDate = new Date();
         if( args.length > 1)
-            {
-                int gyear = Integer.parseInt(args[1]);
-                Calendar cal = new GregorianCalendar(gyear,0,1);
+        {
+            int gyear = Integer.parseInt(args[1]);
+            Calendar cal = new GregorianCalendar(gyear,0,1);
 
-                startDate  = cal.getTime();
-            }
-        
+            startDate  = cal.getTime();
+        }
+
         JewishHolidaysCalendar hd = new JewishHolidaysCalendar(startDate,HebrewDate.SEPHARDIC_ENGLISH_LOCALE);
         hd.setIsraeliCalendar(true);
         for(int startGYear = hd.getGregorianYear();
@@ -68,18 +64,17 @@ public class App
             hd.forward())
 
         {
-        	out.println();
-        	out.println(hd.formatGregorianDate_English());
-                out.println(hd.formatHebrewDate_Russian());
-                out.println(hd.formatHebrewDate_Hebrew());
-        	out.println(hd. formatHebrewDate_English());
-        	
-        	JewishCalendarEvent[] holidays = hd.getEvents();
-        	for( int j = 0; j< holidays.length;j++)
-        	{
-        		out.println(holidays[j].toString());
-        		out.println(holidays[j].getLocalizedString());        		
-        	}
+            out.println();
+            out.println(hd.formatGregorianDate_English());
+//            out.println(hd.formatHebrewDate_Russian());
+            out.println(hd.formatHebrewDate_Hebrew());
+            out.println(hd. formatHebrewDate_English());
+
+            JewishCalendarEvent[] holidays = hd.getEvents();
+            for (JewishCalendarEvent holiday : holidays) {
+                out.println(holiday.toString());
+                out.println(holiday.getLocalizedString());
+            }
         }
         out.flush();
     }

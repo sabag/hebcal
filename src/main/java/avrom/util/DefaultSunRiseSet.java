@@ -1,8 +1,9 @@
 package avrom.util;
 
-import com.web_tomorrow.utils.suntimes.*;
-
-import java.util.*;
+import java.util.Calendar;
+import kevinboone.suntimes.Calculator;
+import kevinboone.suntimes.SunTimesException;
+import kevinboone.suntimes.Time;
 
 /**
 * Concrete subclass of SunRiseSet.<P>
@@ -15,10 +16,10 @@ public class DefaultSunRiseSet extends SunRiseSet
 	{
 		try
 		{
-			Time time= SunTimes.getSunriseTimeUTC(date.get(Calendar.YEAR), 
+			Time time = Calculator.getSunriseTimeUTC_z(date.get(Calendar.YEAR),
 					date.get(Calendar.MONTH)+ 1, 
 					date.get(Calendar.DAY_OF_MONTH), 
-					longitude, latitude, SunTimes.CIVIL_ZENITH);
+					longitude, latitude, Calculator.CIVIL_ZENITH);
 
 			return getDateFromTime(time);
 		}
@@ -42,9 +43,9 @@ public class DefaultSunRiseSet extends SunRiseSet
 	{
 		try
 		{
-			Time time= SunTimes.getSunsetTimeUTC(date.get(Calendar.YEAR), 
+			Time time = Calculator.getSunsetTimeUTC_z(date.get(Calendar.YEAR),
 					date.get(Calendar.MONTH)+ 1, 
-					date.get(Calendar.DAY_OF_MONTH), longitude, latitude, SunTimes.ZENITH);
+					date.get(Calendar.DAY_OF_MONTH), longitude, latitude, Calculator.ZENITH);
 			return getDateFromTime(time);
 		}
 		catch (SunTimesException e)
