@@ -35,6 +35,7 @@ public class CandleLighting {
 
 	private int CANDLE_OFFSET = 18;
 	private int HAVDALA_OFFSET = 40;
+	//Netanya (32.33291 lat, 34.85992 long, Asia/Jerusalem)
 	private final Location defaultLocale = new Location("Netanya", "Netanya, Israel" , 32.33291, 34.85992, TimeZone.getTimeZone("Asia/Jerusalem"));
 	private Location currentLocale = defaultLocale;
 	private HebrewDate hebrewDate = new HebrewDate();

@@ -7,6 +7,15 @@ import org.junit.Test;
 public class CandleLightingTest {
 
 	@Test
+	public void testSunriseSunsetTimes() {
+
+		SunRiseSet instance = SunRiseSet.getInstance();
+
+		System.out.println("Netanya Sunrise : " + instance.getSunriseTime().getTime());
+		System.out.println("Netanya Sunset :  " + instance.getSunsetTime().getTime());
+	}
+
+	@Test
 	public void testCandleLighting () throws HebrewDateException {
 		HebrewDate hebrewDate = new HebrewDate();
 		hebrewDate.setDate(1);

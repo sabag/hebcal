@@ -20,23 +20,29 @@ public abstract class SunRiseSet {
 	protected double longitude;
 	protected double latitude;
 	
-	private final TimeZone gmt = TimeZone.getTimeZone("GMT");
-	
+	private static final TimeZone DEFAULT_TZ = TimeZone.getTimeZone("GMT");
+
+	//Netanya (32.33291 lat, 34.85992 long, Asia/Jerusalem)
+	public static final double DEFAULT_LATITUDE = 32.33291;
+	public static final double DEFAULT_LONGITUDE = 34.85992;
+
 	/** Gets a concrete subclass of this class. */
 	public static SunRiseSet getInstance() {
-		return new DefaultSunRiseSet();
+		DefaultSunRiseSet defaultSunRiseSet = new DefaultSunRiseSet();
+		defaultSunRiseSet.setDateAndCoordinates(Calendar.getInstance(), DEFAULT_LONGITUDE, DEFAULT_LATITUDE);
+		return defaultSunRiseSet;
 	}
 
 	/** Sets the planetary coordinates. (+ is North and East, - is South and West) */
 	public void setCoordinates(double longitude, double latitude) {
-		this.longitude= longitude;
-		this.latitude= latitude;
+		this.longitude = longitude;
+		this.latitude = latitude;
 	}
 
 	/** Set the date you wish to obtain sunrise/set times for using a Date object */
 	public void setDate(Date date) {
 		// ensure that this Calendar object is always set to GMT timezone
-		this.date= Calendar.getInstance(gmt);
+		this.date = Calendar.getInstance(DEFAULT_TZ);
 		this.date.setTime(date);
 		/*Calendar cal= Calendar.getInstance();
 		cal.setTime(date);
@@ -45,9 +51,9 @@ public abstract class SunRiseSet {
 
 	/** Set the date you wish to obtain sunrise/set times for using a Calendar object */
 	public void setDate(Calendar date){
-		this.date= date;
+		this.date = date;
 		// ensure that this Calendar object is always set to GMT timezone
-		this.date.setTimeZone(gmt);
+		this.date.setTimeZone(DEFAULT_TZ);
 	}
 
 	/** Set the date you wish to obtain sunrise/set times for using a Date object 

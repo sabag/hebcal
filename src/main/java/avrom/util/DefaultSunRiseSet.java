@@ -11,13 +11,12 @@ import kevinboone.suntimes.Time;
 */
 public class DefaultSunRiseSet extends SunRiseSet {
 
-	public Calendar getSunriseTime()
-	{
+	public Calendar getSunriseTime() {
 		try {
 			Time time = Calculator.getSunriseTimeUTC_z(date.get(Calendar.YEAR),
 					date.get(Calendar.MONTH)+ 1, 
 					date.get(Calendar.DAY_OF_MONTH), 
-					longitude, latitude, Calculator.CIVIL_ZENITH);
+					longitude, latitude, Calculator.ZENITH);
 
 			return getDateFromTime(time);
 		}
@@ -28,7 +27,7 @@ public class DefaultSunRiseSet extends SunRiseSet {
 	}
 
 	private Calendar getDateFromTime(Time time) {
-		Calendar cal= (Calendar) date.clone();
+		Calendar cal = (Calendar) date.clone();
 		cal.set(Calendar.HOUR_OF_DAY, time.getHour());
 		cal.set(Calendar.MINUTE, time.getMinute());
 		cal.set(Calendar.SECOND, time.getSecond());
