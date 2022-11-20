@@ -32,8 +32,7 @@ import java.util.ResourceBundle;
 
 /**
  * Adapted from HebDate Avrom Finkelstein's Java port of the Reingold C++ algorithm.
- * http://www.bayt.org/calendar/hebdate.html
- * 
+ *
  * The HebrewDate class allows one to maintain an instance of a Gregorian date along
  * with the corresponding hebrew date.<P>
  * This class can use the standard Java Date and Calendar classes for setting it, but does
@@ -66,11 +65,10 @@ public class HebrewDate implements Comparable<HebrewDate> {
 	/** Ashkenazis english locale, i.e.  "16 Teves" */
 	public static final Locale ASHKENAZIS_ENGLISH_LOCALE = new Locale("en", "PL");
 
-	/** Hebrew locale, i.e.  "??? ???" */
+	/** Hebrew locale, i.e.  "טז טבת" */
 	public static final Locale HEBREW_LOCALE = Locale.forLanguageTag("iw-IL");
 
-
-	/** sephardic english locale, i.e.  "16 Tevet" */
+	/** hebrew locale as default */
 	public static final Locale DEFAULT_ENGLISH_LOCALE = HEBREW_LOCALE;
 
 
@@ -364,12 +362,12 @@ public class HebrewDate implements Comparable<HebrewDate> {
 	}
 
 	/** Inits date based on gregorian date (month, day, year) */
-	public HebrewDate(int gMonth, int gDayOfMonth, int gYear, Locale loc)
-			throws HebrewDateException {
+	public HebrewDate(int gMonth, int gDayOfMonth, int gYear, Locale loc) throws HebrewDateException {
 		// put in nicer message in exception
 		if (gMonth == CURRENT_MONTH || gDayOfMonth == CURRENT_DATE
-				|| gYear == CURRENT_YEAR)
+				|| gYear == CURRENT_YEAR) {
 			throw new HebrewDateException("Illegal value in constructor.");
+		}
 		setDate(gMonth, gDayOfMonth, gYear);
 		setLocale(loc);
 	}
@@ -405,6 +403,10 @@ public class HebrewDate implements Comparable<HebrewDate> {
 	public HebrewDate(Calendar cal, Locale loc) {
 		setDate(cal);
 		setLocale(loc);
+	}
+
+	public HebrewDate(int gMonth, int gDayOfMonth, int gYear) throws HebrewDateException {
+		this(gMonth, gDayOfMonth, gYear, DEFAULT_ENGLISH_LOCALE);
 	}
 
 	/**
