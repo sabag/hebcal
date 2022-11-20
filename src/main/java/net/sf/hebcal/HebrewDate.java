@@ -71,7 +71,7 @@ public class HebrewDate implements Comparable<HebrewDate> {
 
 
 	/** sephardic english locale, i.e.  "16 Tevet" */
-	public static final Locale DEFAULT_ENGLISH_LOCALE = SEPHARDIC_ENGLISH_LOCALE;
+	public static final Locale DEFAULT_ENGLISH_LOCALE = HEBREW_LOCALE;
 
 
 	/** Current month (hebrew or gregorian) this object is set to. */

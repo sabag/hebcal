@@ -27,7 +27,6 @@ package net.sf.hebcal;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -66,6 +65,7 @@ import java.util.ResourceBundle;
  *  @author Danny Sadinoff
  */
 public class JewishHolidaysCalendar extends HebrewDate {
+
 	private Locale locale;
 
 	private ResourceBundle holidayBundle = null;
@@ -647,15 +647,4 @@ public class JewishHolidaysCalendar extends HebrewDate {
 		}
 
 	}
-	/*
-	 * public static void main(String[] args) { try { HebrewDate date= new
-	 * HebrewDate(); date.setHebrewDate(7, 10, 5660);
-	 * 
-	 * for (int i=1900; i < 2000; i++) {
-	 * 
-	 * if (date.getDayOfWeek() == 7) {
-	 * System.out.println(date.getDateAsString()); }
-	 * date.setHebrewDate(HebrewDate.CURRENT_MONTH, HebrewDate.CURRENT_DATE,
-	 * date.getHebrewYear() + 1); } } catch (Exception e) { e.printStackTrace(); } }
-	 */
 }

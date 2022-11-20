@@ -1,8 +1,10 @@
 package avrom.util;
 
-import java.util.*;
-import java.text.*;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 import net.sf.hebcal.HebrewDate;
 import net.sf.hebcal.JewishHolidaysCalendar;
 
@@ -29,73 +31,77 @@ import net.sf.hebcal.JewishHolidaysCalendar;
 * @see avrom.util.Location
 * @see net.sf.hebcal.HebrewDate
 */
-public class CandleLighting
-{
-	private int CANDLE_OFFSET= 18;
-	private int HAVDALA_OFFSET= 60;
-	private final Location defaultLocale= new Location("Toronto", "Toronto, Ontario" , 43.65, -79.38, TimeZone.getTimeZone("EST"));
-	private Location currentLocale= defaultLocale;
-	private HebrewDate hebrewDate= new HebrewDate();
-	private LocationList locales= new LocationList();
+public class CandleLighting {
 
-	private DateFormat df= new SimpleDateFormat("h:mm a");
-	private SunRiseSet sunset= SunRiseSet.getInstance();
+	private int CANDLE_OFFSET = 18;
+	private int HAVDALA_OFFSET = 40;
+	private final Location defaultLocale = new Location("Netanya", "Netanya, Israel" , 32.33291, 34.85992, TimeZone.getTimeZone("Asia/Jerusalem"));
+	private Location currentLocale = defaultLocale;
+	private HebrewDate hebrewDate = new HebrewDate();
+	private LocationList locales = new LocationList();
+
+	private final DateFormat df = new SimpleDateFormat("HH:mm");
+	private final SunRiseSet sunset = SunRiseSet.getInstance();
+
 	/** Initialize candlelighting with a hebrew date (locale is defaulted to Toronto.) */
 	public CandleLighting(HebrewDate date)
 	{
-		hebrewDate= date;
+		hebrewDate = date;
 		setCurrentTimeZone();
 	}
+
 	/** Defaults to current system date and default locale (Toronto). */
 	public CandleLighting()
 	{
 		setCurrentTimeZone();
 	}
+
 	/** Initialize with a hebrew date and a city locale. */
 	public CandleLighting(HebrewDate date, Location locale)
 	{
 		this(date);
 		setCurrentLocale(locale);
 	}
+
 	/** Initialize with the location of the properties file. */
-	public CandleLighting(String localeFile) throws Exception
-	{
+	public CandleLighting(String localeFile) {
 		this();
 		setProperties(localeFile);
 	}
+
 	/** Initialize with the location of the properties file and a hebrew date. */
-	public CandleLighting(HebrewDate date, String localeFile) throws Exception
-	{
+	public CandleLighting(HebrewDate date, String localeFile) {
 		this(date);
 		setProperties(localeFile);
 	}
+
 	/** Private method to make sure the date formatter is set to the current time zone */
-	private void setCurrentTimeZone()
-	{
+	private void setCurrentTimeZone() {
 		df.setTimeZone(currentLocale.getTimeZone());
 	}
 
 	/** Sets the offset (in minutes) before sunset for candlelighting times.<BR>
 	* The default value is 18.
 	*/
-	public void setCandleOffset(int offset)
-	{
+	public void setCandleOffset(int offset) {
 		if (offset < 0)
 			throw new IllegalArgumentException("Candlelighting offset cannot be less than zero. (Recommended value: 18)");
 
 		CANDLE_OFFSET= offset;
 	}
+
 	/** Gets the offset (in minutes) before sunset for candlelighting times.<BR>
 	* The default value is 18.
 	*/
-	public int getCandleOffset()
-	{
+	public int getCandleOffset() {
 		return CANDLE_OFFSET;
 	}
+
 	/** Sets the offset (in minutes) after sunset for havdala times.<BR>
 	* The default value is 60.<BR>
 	* "Recommended" values: 40- 72 minutes.
 	*/
+
 	public void setHavdalaOffset(int offset)
 	{
 		if (offset < 0)
@@ -118,7 +124,7 @@ public class CandleLighting
 	/** Sets the current City Locale. */
 	public void setCurrentLocale(Location locale)
 	{
-		currentLocale= locale;
+		currentLocale = locale;
 		setCurrentTimeZone();
 	}
 	/**
@@ -160,6 +166,7 @@ public class CandleLighting
 	{
 		hebrewDate= date;
 	}
+
 	/** Returns the candlelighting time as a string in the format "hh:mm xm"
 	* or an empty string if there is no candlelighting time for this date */
 	public String getCandleLighting()
@@ -179,7 +186,7 @@ public class CandleLighting
 		if (!isCandleLightingDay())
 			return null;
 
-		Calendar time= getSunset();
+		Calendar time = getSunset();
 		// if Yom Tov falls on Motzai Shabbos, you cannot light candles
 		// until after Shabbos is over. Also, the same applies for second day Yom Tov,
 		// except if it falls out on Friday night.
@@ -239,14 +246,14 @@ public class CandleLighting
 	private Calendar getSunset()
 	{
 		sunset.setDateAndCoordinates(hebrewDate.getTime(), currentLocale.getLongitude(), currentLocale.getLatitude());
-		Calendar time= sunset.getSunsetTime();
+		Calendar time = sunset.getSunsetTime();
 		return time;
 	}
 	/** Returns the havdala time as a string or an empty string if there
 	* is no havdala time for this date */
 	public String getHavdala()
 	{
-		Date time= getHavdalaAsDate();
+		Date time = getHavdalaAsDate();
 		if (time == null)
 			return "";
 		else
@@ -416,7 +423,7 @@ public class CandleLighting
 	/** Sets the list of city locales. Overrides the current list. */
 	public void setLocationList(LocationList list)
 	{
-		locales= list;
+		locales = list;
 	}
 	/** Returns the city locale list. */
 	public LocationList getLocationList()
@@ -429,40 +436,4 @@ public class CandleLighting
 	{
 		locales.addLocation(locale);
 	}
-	/*public static void main (String[] args)
-	{
-		try
-		{
-			HebrewDate hebrewDate= new HebrewDate();
-			hebrewDate.setDate(1);
-
-			CandleLighting lighting= new CandleLighting(hebrewDate);
-			lighting.setProperties("cities.properties");
-            String[] keys= lighting.getLocationList().getLocationKeys();
-            for (int i=0; i < keys.length; i++)
-                System.out.println(keys[i]);
-
-			lighting.setCurrentLocaleKey("Denver");
-
-			System.out.println("Candlelighting/Havadala Times for: "+lighting.getCurrentLocale().getName());
-
-
-			for (int i=0; i < hebrewDate.getLastDayOfMonth(); i++)
-			{
-				String candle= lighting.getCandleLighting();
-				String havdala= lighting.getHavdala();
-
-				if (candle.length() != 0)
-					System.out.println("Candlelighting time for " + hebrewDate + ' ' + candle);
-				if (havdala.length() != 0)
-					System.out.println("Havdala time for " + hebrewDate + ' ' + havdala);
-
-				hebrewDate.forward();
-			}
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}*/
 }
