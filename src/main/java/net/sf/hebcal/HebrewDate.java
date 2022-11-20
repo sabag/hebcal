@@ -520,23 +520,19 @@ public class HebrewDate implements Comparable<HebrewDate> {
 	/**
 	 * accepts Numeric input and emits the hebrew-formatted date, i.e.
 	 *     כ"ב באייר תשמ"א
-	 * @param gMonth
-	 * @param dayOfWeek
-	 * @param gYear
-	 * @param bundle
-	 * @return
+	 * @return string represents the day in hebrew
 	 */
 	public String formatHebrewDate_Hebrew() {
 		String hMonth = getHebrewMonthAsString();
-		String hYear = HebrewUtil.formatHebrewNumber(getHebrewYear() % 1000,
-				true);
+		String hYear = HebrewUtil.formatHebrewNumber(getHebrewYear() % 1000, true);
 		String hDay = HebrewUtil.formatHebrewNumber(getHebrewDate(), true);
 		return hDay + " ב" + hMonth + " " + hYear;
 	}
 
 	/** Returns a string containing the hebrew date in the form, "Month day, year" <BR>
 	 * e.g. "Teves 23, 5760" */
-	public String formatHebrewDate_English() { //FIX consider using an actual formatter for this...
+	public String formatHebrewDate_English() {
+		//FIX consider using an actual formatter for this...
 		return getHebrewMonthAsString() + " " + hebrewDate + ", " + hebrewYear;
 	}
 

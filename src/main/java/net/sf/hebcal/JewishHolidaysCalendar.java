@@ -27,6 +27,7 @@ package net.sf.hebcal;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -72,7 +73,7 @@ public class JewishHolidaysCalendar extends HebrewDate {
 
 	private ResourceBundle parshiotBundle = null;
 
-	private boolean israeliCalendar = false;
+	private boolean israeliCalendar = true;
 
 	// XXX: this wants to be a formatter.
 	private static final Map<String, Method> OMER_MAP = new HashMap<>();
@@ -209,8 +210,7 @@ public class JewishHolidaysCalendar extends HebrewDate {
 	/**
 	 * Initializes based on a month, date, year. Assume non-israeli calendar.
 	 */
-	public JewishHolidaysCalendar(int gMonth, int gDayOfMonth, int gYear,
-			Locale loc) throws HebrewDateException {
+	public JewishHolidaysCalendar(int gMonth, int gDayOfMonth, int gYear, Locale loc) throws HebrewDateException {
 		super(gMonth, gDayOfMonth, gYear, loc);
 		setHolidayLocale(loc);
 	}
@@ -637,4 +637,9 @@ public class JewishHolidaysCalendar extends HebrewDate {
 			return null;
 		}
 	}
+
+	public boolean isYomTov() {
+		return Arrays.stream(getEvents()).anyMatch(JewishCalendarEvent::isYomTov);
+	}
+
 }

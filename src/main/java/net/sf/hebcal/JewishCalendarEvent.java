@@ -81,55 +81,49 @@ public class JewishCalendarEvent
 	};
 	
 	
-	JewishCalendarEvent(final String preformattedMessage,
-			int[] flagsArray)
-	{
+	JewishCalendarEvent(final String preformattedMessage, int[] flagsArray) {
 		this.key = preformattedMessage;
 		this.bundle = null;
 		this.formatted = true;
 		this.flags = new BitSet();
-		if (null != flagsArray)
-		{
-			for( int i =0; i< flagsArray.length;i++)
-				flags.set(flagsArray[i]);
+		if (null != flagsArray){
+			for (int j : flagsArray) {
+				flags.set(j);
+			}
 		}
 	}
 
 			
-	JewishCalendarEvent(final String key, 
-			final ResourceBundle bundle,
-			int[] flagsArray)
-	{
+	JewishCalendarEvent(final String key, final ResourceBundle bundle, int[] flagsArray) {
 		this.key = key;
 		this.bundle = bundle;
 		this.flags = new BitSet();
 		this.formatted = false;
-		if (null != flagsArray)
-		{
-			for( int i =0; i< flagsArray.length;i++)
-				flags.set(flagsArray[i]);
+		if (null != flagsArray) {
+			for (int j : flagsArray) {
+				flags.set(j);
+			}
 		}
 	}
 	
-	public String getLocalizedString()
-	{
+	public String getLocalizedString() {
 		if( formatted )
 			return key;
 		else
 			return bundle.getString(key);
 	}
 	
-	public String getKey()
-	{
+	public String getKey() {
 		return key;
 	}
-	
-	public String toString()
-	{
-		StringBuffer buf= new StringBuffer("{Holiday:"+key+" flags=[");
+
+	@Override
+	public String toString() {
+		StringBuilder buf = new StringBuilder("{Holiday:"+key+" flags=[");
 		for (int i =0; i< bitsetElements.length;i++)
-			if( flags.get(i))
-				buf.append(bitsetElements[i]+",");
+			if( flags.get(i)) {
+				buf.append(bitsetElements[i]).append(",");
+			}
 		buf.append("]}");
 		return buf.toString();
 	}
@@ -137,5 +131,8 @@ public class JewishCalendarEvent
 	public BitSet getFlags() {
 		return (BitSet)flags.clone();
 	}
-	
+
+	public boolean isYomTov(){
+		return flags.get(YOM_TOV);
+	}
 }

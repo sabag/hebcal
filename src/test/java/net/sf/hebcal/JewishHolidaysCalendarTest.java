@@ -61,4 +61,19 @@ public class JewishHolidaysCalendarTest {
         out.close();
     }
 
+    @Test
+    public void testIsHoliday() throws HebrewDateException {
+        JewishHolidaysCalendar hebcal = new JewishHolidaysCalendar(10, 10, 2022, HebrewDate.HEBREW_LOCALE);
+        System.out.println(hebcal);
+        System.out.println(hebcal.formatHebrewDate_Hebrew());
+        System.out.println(hebcal.formatHebrewDate_English());
+        System.out.println(hebcal.formatGregorianDate_English());
+
+        hebcal = new JewishHolidaysCalendar(10, 10, 2022, true, HebrewDate.HEBREW_LOCALE);
+        System.out.println(hebcal.formatHebrewDate_Hebrew());
+        if(hebcal.isYomTov()) {
+            System.out.println("YOMTOV");
+        }
+
+    }
 }
