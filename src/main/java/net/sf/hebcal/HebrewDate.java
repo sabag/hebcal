@@ -59,19 +59,15 @@ import java.util.ResourceBundle;
  *  @author Avrom Finkelstein
  *  @author Danny Sadinoff
  */
-public class HebrewDate implements Comparable {
+public class HebrewDate implements Comparable<HebrewDate> {
 	/** sephardic english locale, i.e.  "16 Tevet" */
 	public static final Locale SEPHARDIC_ENGLISH_LOCALE = new Locale("en", "IL");
 
-	/** russian */
-	public static final Locale RUSSIAN_LOCALE = new Locale("ru");
-
 	/** Ashkenazis english locale, i.e.  "16 Teves" */
-	public static final Locale ASHKENAZIS_ENGLISH_LOCALE = new Locale("en",
-			"PL");
+	public static final Locale ASHKENAZIS_ENGLISH_LOCALE = new Locale("en", "PL");
 
 	/** Hebrew locale, i.e.  "??? ???" */
-	public static final Locale HEBREW_LOCALE = new Locale("he");
+	public static final Locale HEBREW_LOCALE = Locale.forLanguageTag("iw-IL");
 
 
 	/** sephardic english locale, i.e.  "16 Tevet" */
@@ -542,11 +538,6 @@ public class HebrewDate implements Comparable {
 		return getHebrewMonthAsString() + " " + hebrewDate + ", " + hebrewYear;
 	}
 
-	/** Returns a string containing the hebrew date in the form, "Month day, year" <BR>
-	 * e.g. "Teves 23, 5760" */
-	public String formatHebrewDate_Russian() { //FIX consider using an actual formatter for this...
-		return getHebrewMonthAsString() + " " + hebrewDate + ", " + hebrewYear;
-	}
 
 	/** Returns a string containing the Gregorian date in the form, "Month day, year" <BR>
 	 * e.g. "January 1, 2000".<P>
@@ -670,14 +661,9 @@ public class HebrewDate implements Comparable {
 	 * Returns a value less than 0 if this date is "less than" (before) the date,
 	 * greater than 0 if this date is "greater than" (after) the date, or 0 if they are
 	 * equal. */
-	public int compareTo(Object o) {
-		HebrewDate hebDate = (HebrewDate) o;
-		if (absDate < hebDate.getAbsDate())
-			return -1;
-		else if (absDate > hebDate.getAbsDate())
-			return 1;
-		else
-			return 0;
+	@Override
+	public int compareTo(HebrewDate hebDate) {
+		return Integer.compare(absDate, hebDate.getAbsDate());
 	}
 
 	/** returns a string  of the current hebrew month, localized with the calendar bundle*/

@@ -7,8 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
+public class AppTest extends TestCase
 {
     /**
      * Create the test case
@@ -34,9 +33,17 @@ public class AppTest
     public void testApp()
         throws Exception
     {
-        HebrewDate hd = new HebrewDate(12,31,2011,HebrewDate.ASHKENAZIS_ENGLISH_LOCALE);
-        hd.setHebrewDate(9,30,5767);
-
+        HebrewDate hd = new HebrewDate(12,31,2011, HebrewDate.HEBREW_LOCALE);
+        assertEquals("ה׳ בטבת תשע״ב", hd.formatHebrewDate_Hebrew());
         System.out.println(hd.formatHebrewDate_Hebrew());
+
+        hd.setHebrewDate(9,30,5767);
+        assertEquals("ל׳ בכסלו תשס״ז", hd.formatHebrewDate_Hebrew());
+        System.out.println(hd.formatHebrewDate_Hebrew());
+
+        hd = new HebrewDate(2,23,1976, HebrewDate.HEBREW_LOCALE);
+        assertEquals("כ״ב באדר א׳ תשל״ו", hd.formatHebrewDate_Hebrew());
+        System.out.println(hd.formatHebrewDate_Hebrew());
+
     }
 }

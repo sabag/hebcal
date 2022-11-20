@@ -26,7 +26,11 @@
 
 package net.sf.hebcal;
 
-import java.io.PrintStream;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -39,14 +43,13 @@ public class App
 {
     public static void main( String[] args ) throws Exception
     {
-//        PrintWriter out = new PrintWriter (new BufferedWriter(new OutputStreamWriter(
-//            new FileOutputStream(args[0]),
-//            StandardCharsets.UTF_8)));
-//        out.println("<html><head><META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><pre dir=\"rtl\">");
-//        out.println("\u05e0\u05d9\u05e1\u05df<br>");
-//        out.println("אבגדהוזחטי");
-//        out.println("אבגדהוזחטי");
-        PrintStream out = System.out;
+        PrintWriter out = new PrintWriter (new BufferedWriter(new OutputStreamWriter(
+            new FileOutputStream(args[0]),
+            StandardCharsets.UTF_8)));
+        out.println("<html><head><META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><pre dir=\"rtl\">");
+        out.println("\u05e0\u05d9\u05e1\u05df<br>");
+        out.println("אבגדהוזחטי");
+        out.println("אבגדהוזחטי");
 
         Date startDate = new Date();
         if( args.length > 1)
@@ -66,7 +69,6 @@ public class App
         {
             out.println();
             out.println(hd.formatGregorianDate_English());
-//            out.println(hd.formatHebrewDate_Russian());
             out.println(hd.formatHebrewDate_Hebrew());
             out.println(hd. formatHebrewDate_English());
 
