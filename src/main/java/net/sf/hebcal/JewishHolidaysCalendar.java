@@ -75,17 +75,13 @@ public class JewishHolidaysCalendar extends HebrewDate {
 	private boolean israeliCalendar = false;
 
 	// XXX: this wants to be a formatter.
-	private static Map OMER_MAP = new HashMap();
+	private static final Map<String, Method> OMER_MAP = new HashMap<>();
 	static {
 		try {
-                    //			System.out.println(Arrays.asList(JewishHolidaysCalendar.class
-                    //					.getDeclaredMethods()));
 			OMER_MAP.put("en", JewishHolidaysCalendar.class.getDeclaredMethod(
 					"formatOmer_short_EN", new Class[] { int.class }));
 			OMER_MAP.put("iw", JewishHolidaysCalendar.class.getDeclaredMethod(
 					"formatOmer_short_HE", new Class[] { int.class }));
-			OMER_MAP.put("ru", JewishHolidaysCalendar.class.getDeclaredMethod(
-					"formatOmer_short_EN", new Class[] { int.class }));
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
 		}
@@ -193,16 +189,13 @@ public class JewishHolidaysCalendar extends HebrewDate {
 	 * @throws MissingResourceException
 	 *             if the locale is unknown
 	 */
-	public void setHolidayLocale(Locale defaultLocale)
-			throws MissingResourceException {
+	public void setHolidayLocale(Locale defaultLocale) throws MissingResourceException {
 		locale = defaultLocale;
 		final String className = JewishHolidaysCalendar.class.getName();
 		// ASSUME: this class is not in the default package.
-		final String packageName = className.substring(0, className
-				.lastIndexOf('.') + 1);
+		final String packageName = className.substring(0, className.lastIndexOf('.') + 1);
 		holidayBundle = ResourceBundle.getBundle(className, locale);
-		parshiotBundle = ResourceBundle.getBundle(packageName + "Parshiot",
-				locale);
+		parshiotBundle = ResourceBundle.getBundle(packageName + "Parshiot", locale);
 	}
 
 	/** Initializes based on gregorian date */
@@ -284,7 +277,7 @@ public class JewishHolidaysCalendar extends HebrewDate {
 		BitSet bsYomTov = new BitSet();
 		bsYomTov.set(JewishCalendarEvent.YOM_TOV);
 */
-		List retList = new ArrayList();
+		List<JewishCalendarEvent> retList = new ArrayList<>();
 		JewishCalendarEvent parsha = getShabbatParsha();
 		if (null != parsha)
 			retList.add(parsha);
@@ -496,9 +489,9 @@ public class JewishHolidaysCalendar extends HebrewDate {
 	 * 
 	 * @return
 	 */
-	public Collection getOmerHoliday() {
+	public Collection<JewishCalendarEvent> getOmerHoliday() {
 		int omer = getOmer();
-		List retList = new LinkedList();
+		List<JewishCalendarEvent> retList = new LinkedList<>();
 
 		// if not omer day //
 		if (omer == 0)
@@ -506,10 +499,8 @@ public class JewishHolidaysCalendar extends HebrewDate {
 
 		String lang = holidayBundle.getLocale().getLanguage();
 		try {
-			String omerString = (String) ((Method) OMER_MAP.get(lang)).invoke(
-					null, new Object[] { new Integer(omer) });
-			retList.add(new JewishCalendarEvent(omerString,
-					new int[] { JewishCalendarEvent.OMER }));
+			String omerString = (String) OMER_MAP.get(lang).invoke(null, new Object[] {omer});
+			retList.add(new JewishCalendarEvent(omerString, new int[] { JewishCalendarEvent.OMER }));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -645,6 +636,5 @@ public class JewishHolidaysCalendar extends HebrewDate {
 			e.printStackTrace();
 			return null;
 		}
-
 	}
 }

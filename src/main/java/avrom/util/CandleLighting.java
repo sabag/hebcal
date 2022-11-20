@@ -260,6 +260,7 @@ public class CandleLighting {
 		else
 			return df.format(time);
 	}
+
 	/** Returns the havdala time as a java.util.Date
 	* or null if there is no havdala time for this date.
 	*/
@@ -277,6 +278,7 @@ public class CandleLighting {
 		time.add(Calendar.MINUTE, HAVDALA_OFFSET);
 		return time.getTime();
 	}
+
 	/** Checks to see if the day is a candlelighting day.<P>
 	* This would be either Friday or erev Yom Tov (1st or 2nd day). */
 	public boolean isCandleLightingDay()
@@ -285,12 +287,12 @@ public class CandleLighting {
 		if (hebrewDate.getDayOfWeek() == 6)
 			return true;
 
-		boolean israeli= false;
+		boolean israeli = false;
 
 		if (hebrewDate instanceof JewishHolidaysCalendar)
 		{
 			JewishHolidaysCalendar date= (JewishHolidaysCalendar) hebrewDate;
-			israeli= date.isIsraeliCalendar();
+			israeli = date.isIsraeliCalendar();
 		}
 		int hebrewMonth= hebrewDate.getHebrewMonth();
 		int date= hebrewDate.getHebrewDate();
