@@ -121,13 +121,13 @@ public class HebrewUtil {
 	}
 
 
-	public static boolean isBirthdayMatch(HebrewDate birthday, HebrewDate today){
-		boolean match1 = birthday.getHebrewDate() == today.getHebrewDate()
+	public static boolean isDayMatchIgnoreYear(HebrewDate d1, HebrewDate today){
+		boolean match1 = d1.getHebrewDate() == today.getHebrewDate()
 				&&
 				(
-						(birthday.getHebrewMonth() == today.getHebrewMonth())
+						(d1.getHebrewMonth() == today.getHebrewMonth())
 								||
-								(birthday.getHebrewMonth() == birthday.getLastMonthOfThisHebrewYear()  &&  today.getHebrewMonth() == today.getLastMonthOfThisHebrewYear())
+								(d1.getHebrewMonth() == d1.getLastMonthOfThisHebrewYear()  &&  today.getHebrewMonth() == today.getLastMonthOfThisHebrewYear())
 				)
 				;
 		return match1;
