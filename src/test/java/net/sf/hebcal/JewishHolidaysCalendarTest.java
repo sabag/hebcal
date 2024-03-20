@@ -1,17 +1,13 @@
 package net.sf.hebcal;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 public class JewishHolidaysCalendarTest {
 

@@ -119,4 +119,18 @@ public class HebrewUtil {
 
 		return buf.toString();
 	}
+
+
+	public static boolean isBirthdayMatch(HebrewDate birthday, HebrewDate today){
+		boolean match1 = birthday.getHebrewDate() == today.getHebrewDate()
+				&&
+				(
+						(birthday.getHebrewMonth() == today.getHebrewMonth())
+								||
+								(birthday.getHebrewMonth() == birthday.getLastMonthOfThisHebrewYear()  &&  today.getHebrewMonth() == today.getLastMonthOfThisHebrewYear())
+				)
+				;
+		return match1;
+	}
+
 }

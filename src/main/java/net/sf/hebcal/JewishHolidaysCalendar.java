@@ -26,19 +26,7 @@
 package net.sf.hebcal;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * The RegularHebrewDate class is a subclass of the HebrewDate class that adds
@@ -458,8 +446,7 @@ public class JewishHolidaysCalendar extends HebrewDate {
 			break;
 		}
 		retList.addAll(getOmerHoliday());
-		return (JewishCalendarEvent[]) retList
-				.toArray(new JewishCalendarEvent[] {});
+		return retList.toArray(new JewishCalendarEvent[] {});
 	}
 
 	/**

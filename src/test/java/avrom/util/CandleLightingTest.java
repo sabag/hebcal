@@ -1,12 +1,14 @@
 package avrom.util;
 
+import net.sf.hebcal.HebrewDate;
+import net.sf.hebcal.HebrewDateException;
+
 import java.time.Clock;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
-import net.sf.hebcal.HebrewDate;
-import net.sf.hebcal.HebrewDateException;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 public class CandleLightingTest {
 
