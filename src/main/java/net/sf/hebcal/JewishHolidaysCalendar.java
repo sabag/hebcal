@@ -485,12 +485,15 @@ public class JewishHolidaysCalendar extends HebrewDate {
 			return Collections.EMPTY_LIST;
 
 		String lang = holidayBundle.getLocale().getLanguage();
+		String omerString;
 		try {
-			String omerString = (String) OMER_MAP.get(lang).invoke(null, new Object[] {omer});
-			retList.add(new JewishCalendarEvent(omerString, new int[] { JewishCalendarEvent.OMER }));
+			omerString = (String) OMER_MAP.get(lang).invoke(null, new Object[] {omer});
 		} catch (Exception e) {
-			e.printStackTrace();
+			// BUG - FIXME: fix this code flow
+			omerString = formatOmer_short_HE(omer);
 		}
+		retList.add(new JewishCalendarEvent(omerString, new int[] { JewishCalendarEvent.OMER }));
+
 		if (omer == 33)
 			retList.add(new JewishCalendarEvent("LagBOmer", holidayBundle,
 					new int[] { JewishCalendarEvent.HOLIDAY_NON_YOM_TOV }));

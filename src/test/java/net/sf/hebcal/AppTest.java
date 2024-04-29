@@ -2,6 +2,7 @@ package net.sf.hebcal;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,5 +29,14 @@ public class AppTest {
         assertEquals("כ״ב באדר א׳ תשל״ו", hd.formatHebrewDate_Hebrew());
         System.out.println(hd.formatHebrewDate_Hebrew());
 
+    }
+
+    @Test
+    public void testOmerAndYomTov_Pesach7() throws HebrewDateException {
+        JewishHolidaysCalendar hDate = new JewishHolidaysCalendar(4,29,2024, HebrewDate.HEBREW_LOCALE);
+        String value = hDate.formatHebrewDate_Hebrew();
+        System.out.println(value);
+        assertEquals("כ״א בניסן תשפ״ד", value);
+        assertTrue(hDate.isYomTov());
     }
 }
