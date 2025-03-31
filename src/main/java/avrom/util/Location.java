@@ -1,10 +1,10 @@
 package avrom.util;
 
-import java.util.*;
+import java.util.TimeZone;
 
 /**
 * This class defines a city, i.e. a named Location, and it's coordinates on the planet.<BR>
-* It's essentially a lattitude, a longitude and a timezone.
+* It's essentially a latitude, a longitude and a timezone.
 * @see java.util.TimeZone
 * @see LocationList
 */
