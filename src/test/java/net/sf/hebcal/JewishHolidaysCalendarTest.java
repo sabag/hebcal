@@ -97,23 +97,27 @@ public class JewishHolidaysCalendarTest {
     public void testHolidayGregorianDates() throws HebrewDateException {
         List<String> HOLIDAY_LIST = List.of("1:7", "2:7", "10:7", "15:7", "22:7", "15:1", "21:1", "6:3");
 
-        JewishHolidaysCalendar cal = new JewishHolidaysCalendar(
-            new java.util.Date(), HebrewDate.SEPHARDIC_ENGLISH_LOCALE);
+        JewishHolidaysCalendar cal = new JewishHolidaysCalendar(new java.util.Date(), HebrewDate.SEPHARDIC_ENGLISH_LOCALE);
         cal.setIsraeliCalendar(true);
 
-        int currentHebrewYear = cal.getHebrewYear();
-        int startYear = currentHebrewYear - 5;
+        int currentGregorianYear = cal.getGregorianYear();
+        int startYear = currentGregorianYear - 5;
 
-        System.out.println("Holiday Gregorian dates (Hebrew years " + startYear + "-" + (currentHebrewYear - 1) + "):");
-        for (int year = startYear; year < currentHebrewYear; year++) {
-            cal.setHebrewDate(7, 1, year);
-            System.out.println("\n--- " + cal.getGregorianYear() + " ---");
+        System.out.println("Holiday Gregorian dates (" + startYear + "-" + currentGregorianYear + "):");
+        for (int gregYear = startYear; gregYear <= currentGregorianYear; gregYear++) {
+            System.out.println("\n--- " + gregYear + " ---");
             for (String entry : HOLIDAY_LIST) {
                 String[] parts = entry.split(":");
                 int day = Integer.parseInt(parts[0]);
                 int month = Integer.parseInt(parts[1]);
 
-                cal.setHebrewDate(month, day, year);
+                if (month >= 7) {
+                    cal.setDate(11, 1, gregYear);
+                } else {
+                    cal.setDate(4, 1, gregYear);
+                }
+                int hebrewYear = cal.getHebrewYear();
+                cal.setHebrewDate(month, day, hebrewYear);
 
                 String gregDate = cal.formatGregorianDate_English();
 //                StringBuilder holidayNames = new StringBuilder();
