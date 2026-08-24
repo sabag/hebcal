@@ -101,7 +101,7 @@ public class JewishHolidaysCalendarTest {
         cal.setIsraeliCalendar(true);
 
         int currentGregorianYear = cal.getGregorianYear();
-        int startYear = currentGregorianYear - 5;
+        int startYear = 2013;
 
         System.out.println("Holiday Gregorian dates (" + startYear + "-" + currentGregorianYear + "):");
         for (int gregYear = startYear; gregYear <= currentGregorianYear; gregYear++) {
