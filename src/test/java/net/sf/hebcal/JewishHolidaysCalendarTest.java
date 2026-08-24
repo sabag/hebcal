@@ -98,13 +98,15 @@ public class JewishHolidaysCalendarTest {
         List<String> HOLIDAY_LIST = List.of("1:7", "2:7", "10:7", "15:7", "22:7", "15:1", "21:1", "6:3");
 
         JewishHolidaysCalendar cal = new JewishHolidaysCalendar(
-            9, 1, 2022, true, HebrewDate.SEPHARDIC_ENGLISH_LOCALE);
+            new java.util.Date(), HebrewDate.SEPHARDIC_ENGLISH_LOCALE);
+        cal.setIsraeliCalendar(true);
 
         int currentHebrewYear = cal.getHebrewYear();
         int startYear = currentHebrewYear - 5;
 
         System.out.println("Holiday Gregorian dates (Hebrew years " + startYear + "-" + (currentHebrewYear - 1) + "):");
         for (int year = startYear; year < currentHebrewYear; year++) {
+            cal.setHebrewDate(7, 1, year);
             System.out.println("\n--- " + cal.getGregorianYear() + " ---");
             for (String entry : HOLIDAY_LIST) {
                 String[] parts = entry.split(":");
@@ -119,10 +121,9 @@ public class JewishHolidaysCalendarTest {
 //                    if (!holidayNames.isEmpty()) holidayNames.append(", ");
 //                    holidayNames.append(event.getLocalizedString());
 //                }
-                String holidayName = cal.getEvents()[0].getLocalizedString();
 
                 //System.out.println(entry + " -> " + gregDate + "  [" + holidayNames + "]");
-                System.out.println(gregDate + "  [" + holidayName + "]");
+                System.out.println(gregDate + "  [" + cal.getEvents()[0].getLocalizedString() + "]");
             }
         }
     }
