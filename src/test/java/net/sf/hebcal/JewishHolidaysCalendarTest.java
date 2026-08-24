@@ -7,11 +7,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class JewishHolidaysCalendarTest {
 
     @Test
+    @Order(10)
     public void test() throws HebrewDateException {
         HebrewDate date = new HebrewDate(HebrewDate.HEBREW_LOCALE);
         date.setHebrewDate(7, 10, 5660);
@@ -25,6 +30,7 @@ public class JewishHolidaysCalendarTest {
     }
 
     @Test
+    @Order(20)
     public void testCreateHolidayPage() throws IOException {
         File tempFile = File.createTempFile("hebcal-", ".html", new File(System.getProperty("java.io.tmpdir")));
         System.out.println(tempFile.getAbsolutePath());
@@ -59,6 +65,7 @@ public class JewishHolidaysCalendarTest {
     }
 
     @Test
+    @Order(30)
     public void testIsHoliday() throws HebrewDateException {
         JewishHolidaysCalendar hebcal = new JewishHolidaysCalendar(10, 10, 2022, HebrewDate.HEBREW_LOCALE);
         System.out.println(hebcal);
@@ -83,5 +90,40 @@ public class JewishHolidaysCalendarTest {
             hebcal.forward();
         }
 
+    }
+
+    @Test
+    @Order(40)
+    public void testHolidayGregorianDates() throws HebrewDateException {
+        List<String> HOLIDAY_LIST = List.of("1:7", "2:7", "10:7", "15:7", "22:7", "15:1", "21:1", "6:3");
+
+        JewishHolidaysCalendar cal = new JewishHolidaysCalendar(
+            9, 1, 2022, true, HebrewDate.SEPHARDIC_ENGLISH_LOCALE);
+
+        int currentHebrewYear = cal.getHebrewYear();
+        int startYear = currentHebrewYear - 5;
+
+        System.out.println("Holiday Gregorian dates (Hebrew years " + startYear + "-" + (currentHebrewYear - 1) + "):");
+        for (int year = startYear; year < currentHebrewYear; year++) {
+            System.out.println("\n--- " + cal.getGregorianYear() + " ---");
+            for (String entry : HOLIDAY_LIST) {
+                String[] parts = entry.split(":");
+                int day = Integer.parseInt(parts[0]);
+                int month = Integer.parseInt(parts[1]);
+
+                cal.setHebrewDate(month, day, year);
+
+                String gregDate = cal.formatGregorianDate_English();
+//                StringBuilder holidayNames = new StringBuilder();
+//                for (JewishCalendarEvent event : cal.getEvents()) {
+//                    if (!holidayNames.isEmpty()) holidayNames.append(", ");
+//                    holidayNames.append(event.getLocalizedString());
+//                }
+                String holidayName = cal.getEvents()[0].getLocalizedString();
+
+                //System.out.println(entry + " -> " + gregDate + "  [" + holidayNames + "]");
+                System.out.println(gregDate + "  [" + holidayName + "]");
+            }
+        }
     }
 }
